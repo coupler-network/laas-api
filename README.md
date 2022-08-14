@@ -1,6 +1,6 @@
 # LaaS
 
-This directory contains code for the backend API of LaaS, AKA
+This directory contains code for the backend API of Lightning as a Service, AKA
 [coupler.network](https://coupler.network).
 
 ## Getting started
@@ -30,8 +30,8 @@ instance of LND (container name `lnd1` in `docker-compose`), use
 All executable scripts support `-h` flags for quick help summary. For example,
 try `./scripts/mine_blocks.py -h`.
 
-For development, you will need [Rust](https://rustup.rs/). To run the server
-locally, execute `cargo run` from the `backend-api` directory.
+For development, you will need [Rust](https://rustup.rs/). The log level is controlled
+from the `RUST_LOG` environment variable, e.g. `RUST_LOG=debug`.
 
 If you like [adminer](https://www.adminer.org/), a local instance will be
 running at [localhost:7402](http://localhost:7402). Username is `postgres`,
