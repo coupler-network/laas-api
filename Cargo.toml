@@ -1,0 +1,24 @@
+[package]
+name = "backend-api"
+version = "0.1.0"
+edition = "2021"
+default-run = "backend-api"
+
+[workspace]
+members = ["api", "app"]
+
+[features]
+testnet = ["app/testnet"]
+mainnet = ["app/mainnet"]
+
+[dependencies]
+anyhow = "1.0.41"
+api = { path = "./api" }
+app = { path = "./app" }
+log = "0.4.14"
+rocket = "0.5.0-rc.1"
+serde = "1.0.126"
+url = { version = "2.2.2", features = ["serde"] }
+uuid = "1.1.1"
+tokio = { version = "1.17.0", features = ["rt", "time"] }
+env_logger = "0.9.0"

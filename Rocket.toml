@@ -1,0 +1,26 @@
+[default]
+address = "0.0.0.0"
+port = 7401
+log_level = "normal"
+
+[debug]
+database_url = "postgres://postgres:password@localhost:7400/laas"
+
+[debug.lnd]
+url = "https://localhost:7500"
+macaroon_path = "./docker/lnd-data/data/chain/bitcoin/regtest/admin.macaroon"
+cert_path = "./docker/lnd-data/tls.cert"
+first_block = 0
+
+[debug.limits]
+payment_min_sats = 100
+payment_max_sats = 1000000000
+payment_daily_sats = 20000
+invoice_min_sats = 100
+invoice_max_sats = 10000
+invoice_daily_sats = 20000
+
+[debug.rate_limit]
+limit = 3
+span.secs = 10
+span.nanos = 0

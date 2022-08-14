@@ -1,0 +1,21 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+app = { path = "../app" }
+log = "0.4.14"
+serde = "1.0.126"
+uuid = { version = "0.8.2", features = ["serde"] }
+chrono = { version = "0.4.19", features = ["serde"]}
+const_format = "0.2.24"
+rocket = { version = "0.5.0-rc.2", default-features = false, features = ["json"] }
+schemars = { version = "0.8.10", features = ["chrono", "uuid"] }
+okapi = { version = "0.7.0-rc.1" }
+rocket_okapi = { version = "0.8.0-rc.2", features = ["swagger"] }
+dashmap = "5.3.4"
+tokio = { version = "1.20.1", features = ["rt"] }
+thiserror = "1.0.31"

@@ -1,0 +1,4 @@
+target/
+docker/lnd-data/
+!docker/lnd-data/README.md
+**/*.pyc

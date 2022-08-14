@@ -1,0 +1,143 @@
+version: '3.1'
+
+x-lnd: &lnd
+  build: ./lnd/
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: laas
+    command: "-d postgres"
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+    ports:
+      - 7400:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 7402:8080
+
+  bitcoind:
+    image: ruimarinho/bitcoin-core:latest
+    container_name: bitcoind
+    volumes:
+      - bitcoin:/home/bitcoin/.bitcoin
+      - ./lnd-data:/lnd-data
+    command: |
+      --regtest
+      --rpcuser=user
+      --rpcpassword=pass
+      --rpcport=43782
+      --rpcbind=0.0.0.0:43782
+      --rpcallowip=0.0.0.0/0
+      --port=39388
+      --whitelist=0.0.0.0/0
+      --zmqpubrawblock=tcp://0.0.0.0:28332
+      --zmqpubrawtx=tcp://0.0.0.0:28333
+      --deprecatedrpc=signrawtransaction
+      --txindex=1
+      --paytxfee=0.001
+
+  lnd1:
+    <<: *lnd
+    container_name: lnd1
+    command:
+      - "--alias=lnd1"
+      - "--rpclisten=0.0.0.0:10010"
+      - "--bitcoin.node=bitcoind"
+      - "--bitcoind.rpchost=bitcoind:43782"
+      - "--bitcoind.rpcuser=user"
+      - "--bitcoind.rpcpass=pass"
+      - "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332"
+      - "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333"
+      - "--bitcoin.basefee=1000"
+      - "--bitcoin.feerate=2250"
+      - "--bitcoin.defaultchanconfs=1"
+      - "--accept-keysend"
+      - "--protocol.wumbo-channels"
+      - "--noseedbackup"
+      - "--bitcoin.active"
+      - "--bitcoin.regtest"
+      - "--maxpendingchannels=1000"
+    ports:
+      - "7500:10010"
+    volumes:
+      - ./lnd-data:/lnd-data
+      - lnd1:/root/.lnd
+
+  lnd2:
+    <<: *lnd
+    container_name: lnd2
+    command:
+      - "--alias=lnd2"
+      - "--rpclisten=0.0.0.0:10010"
+      - "--bitcoin.node=bitcoind"
+      - "--bitcoind.rpchost=bitcoind:43782"
+      - "--bitcoind.rpcuser=user"
+      - "--bitcoind.rpcpass=pass"
+      - "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332"
+      - "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333"
+      - "--bitcoin.basefee=1000"
+      - "--bitcoin.feerate=2250"
+      - "--bitcoin.defaultchanconfs=1"
+      - "--accept-keysend"
+      - "--protocol.wumbo-channels"
+      - "--noseedbackup"
+      - "--bitcoin.active"
+      - "--bitcoin.regtest"
+      - "--maxpendingchannels=1000"
+
+  lnd3:
+    <<: *lnd
+    container_name: lnd3
+    command:
+      - "--alias=lnd3"
+      - "--rpclisten=0.0.0.0:10010"
+      - "--bitcoin.node=bitcoind"
+      - "--bitcoind.rpchost=bitcoind:43782"
+      - "--bitcoind.rpcuser=user"
+      - "--bitcoind.rpcpass=pass"
+      - "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332"
+      - "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333"
+      - "--bitcoin.basefee=1000"
+      - "--bitcoin.feerate=2250"
+      - "--bitcoin.defaultchanconfs=1"
+      - "--accept-keysend"
+      - "--protocol.wumbo-channels"
+      - "--noseedbackup"
+      - "--bitcoin.active"
+      - "--bitcoin.regtest"
+      - "--maxpendingchannels=1000"
+
+  lnd4:
+    <<: *lnd
+    container_name: lnd4
+    command:
+      - "--alias=lnd4"
+      - "--rpclisten=0.0.0.0:10010"
+      - "--bitcoin.node=bitcoind"
+      - "--bitcoind.rpchost=bitcoind:43782"
+      - "--bitcoind.rpcuser=user"
+      - "--bitcoind.rpcpass=pass"
+      - "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332"
+      - "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333"
+      - "--bitcoin.basefee=1000"
+      - "--bitcoin.feerate=2250"
+      - "--bitcoin.defaultchanconfs=1"
+      - "--accept-keysend"
+      - "--protocol.wumbo-channels"
+      - "--noseedbackup"
+      - "--bitcoin.active"
+      - "--bitcoin.regtest"
+      - "--maxpendingchannels=1000"
+
+volumes:
+  bitcoin:
+  postgres:
+  lnd1:
